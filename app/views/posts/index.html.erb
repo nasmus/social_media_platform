@@ -1,49 +1,59 @@
 
-<body class="bg-gray-100 p-6">
+<body class="bg-gray-100 pb-6">
 <div class="max-w-2xl mx-auto">
   <!-- Post Card -->
   <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-    <!-- Post Header -->
-    <div class="p-4 border-b border-gray-200">
-      <div class="flex items-center space-x-3">
-        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User avatar" class="w-10 h-10 rounded-full object-cover">
+    <div class="px-4 py-4 border-b-gray-200">
+      <%= form_with model: @post, local: true do |form| %>
         <div>
-          <h3 class="font-semibold text-gray-900">Sarah Johnson</h3>
-          <p class="text-xs text-gray-500">2 hours ago</p>
+          <%= form.text_area :content, placeholder: "What's on your mind?", class:"block p-5.5 w-full text-xl text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"%>
+        </div>
+        <div class="flex mt-4">
+          <%= form.submit "Post Status", class: "px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 hover:cursor-pointer" %>
+        </div>
+      <% end %>
+    </div>
+    <!-- Post Header -->
+    <% @posts.each do |post| %>
+      <div class="p-4 border-b border-gray-200">
+        <div class="flex items-center space-x-3">
+          <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User avatar" class="w-10 h-10 rounded-full object-cover">
+          <div>
+            <h3 class="font-semibold text-gray-900"><%= post.user.name %></h3>
+            <p class="text-xs text-gray-500">2 hours ago</p>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Post Content -->
-    <div class="p-4 space-y-2">
-      <p class="text-gray-800 leading-relaxed">
-        Just finished my morning hike! The view from the top was absolutely breathtaking.
-        Definitely worth waking up at 5am for this.
-      </p>
-      <div class="text-sm text-blue-600 space-x-2">
-        <span>#outdoors</span>
-        <span>#hiking</span>
-        <span>#nature</span>
+      <div class="p-4 space-y-2">
+        <p class="text-gray-800 leading-relaxed">
+          <%= post.content %>
+        </p>
       </div>
-    </div>
 
-    <!-- Post Actions -->
-    <div class="px-4 py-2 border-t border-gray-200">
-      <div class="flex justify-around">
-        <button class="flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer">
-          <i class="far fa-thumbs-up"></i>
-          <span>Like</span>
-        </button>
-        <button class="flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600">
-          <i class="far fa-comment"></i>
-          <span>Comment</span>
-        </button>
+      <!-- Post Actions -->
+      <div class="px-4 py-2 border-t border-gray-200">
+        <div class="flex justify-around">
+          <button class="flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer">
+            <i class="far fa-thumbs-up"></i>
+            <span>Like</span>
+          </button>
+          <button class="flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer">
+            <i class="far fa-comment"></i>
+            <span>Comment</span>
+          </button>
+        </div>
       </div>
-    </div>
+
+
+    <% end %>
+
+
+
 
     <!-- Comments Section -->
     <div class="bg-gray-50 p-4">
-      <h4 class="font-bold text-gray-800 mb-3">Comments</h4>
+      <h4 class="font-bold text-gray-800 mb-3 ">Comments</h4>
 
       <!-- Comment 1 -->
       <div class="bg-white rounded-lg shadow-xs p-3 mb-3">
