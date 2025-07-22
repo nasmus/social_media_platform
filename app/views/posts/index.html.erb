@@ -38,7 +38,7 @@
             <i class="far fa-thumbs-up"></i>
             <span>Like</span>
           </button>
-          <button class="flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer">
+          <button id="post_comment" class="flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer">
             <i class="far fa-comment"></i>
             <span>Comment</span>
           </button>
@@ -153,6 +153,7 @@
 
 <script>
     // Simple JavaScript to toggle reply inputs
+    //document.getElementById('.post_comment')
     document.querySelectorAll('.reply-button').forEach(button => {
         button.addEventListener('click', () => {
             const replyInput = button.closest('div').nextElementSibling;

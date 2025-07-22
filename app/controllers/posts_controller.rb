@@ -20,6 +20,7 @@ class PostsController < ApplicationController
   def set_post
     @post = Post.find(params[:id])
   end
+  
   def post_param
     params.require(:post).permit(:content)
   end
