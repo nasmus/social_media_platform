@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   def index
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.includes(:user, comments: :user).order(created_at: :desc)
     @post = Post.new
   end
 
@@ -20,7 +20,7 @@ class PostsController < ApplicationController
   def set_post
     @post = Post.find(params[:id])
   end
-  
+
   def post_param
     params.require(:post).permit(:content)
   end
