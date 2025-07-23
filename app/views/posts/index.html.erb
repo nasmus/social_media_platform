@@ -36,7 +36,7 @@
           <div class="px-4 py-2 border-t border-gray-200">
             <div class="flex justify-around">
               <% if post.likes.exists?(user: current_user) %>
-                <%= button_to "liked (#{post.likes.count})", post_like_path(post, post.likes.find_by(user: current_user)), method: :delete  ,class:"flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer" %>
+                <%= button_to "liked (#{post.likes.count})", post_like_path(post, post.likes.find_by(user: current_user)), method: :delete  ,class:"flex items-center text-blue-600 space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:cursor-pointer" %>
               <% else %>
                 <%= button_to "Like (#{post.likes.count})", post_likes_path(post), method: :post, class: "flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer" %>
               <% end %>
@@ -51,6 +51,9 @@
                 <strong>Liked by:</strong>
                 <% post.likes.each do |like| %>
                   <%= like.user.name %><% unless like == post.likes.last %>, <% end %>
+                <% end %>
+                <% if post.likes.count > 3 %>
+                  and <%= post.likes.count - 3 %> others
                 <% end %>
               </div>
             <% end %>
@@ -132,9 +135,11 @@
                   </div>
                 </div>
               <%end%>-->
+
               <% post.comments.where(parent_id: nil).each do |comment| %>
-                <%= render partial: "comments/comment", locals: { comment: comment } %>
+                <%= render partial: "comments/comment", locals: { comment: comment, post: post } %>
               <% end %>
+
             </div>
           </div>
 
