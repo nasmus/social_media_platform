@@ -35,14 +35,26 @@
           <!-- Post Actions -->
           <div class="px-4 py-2 border-t border-gray-200">
             <div class="flex justify-around">
-              <button class="flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer">
-                <i class="far fa-thumbs-up"></i>
-                <span>Like</span>
-              </button>
+              <% if post.likes.exists?(user: current_user) %>
+                <%= button_to "liked (#{post.likes.count})", post_like_path(post, post.likes.find_by(user: current_user)), method: :delete  ,class:"flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer" %>
+              <% else %>
+                <%= button_to "Like (#{post.likes.count})", post_likes_path(post), method: :post, class: "flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer" %>
+              <% end %>
+              
               <button id="post_comment" data-action="click->reply#cancel" class="flex items-center space-x-1 px-3 py-1.5 rounded-md hover:bg-blue-50 hover:text-blue-600 text-gray-600 hover:cursor-pointer">
                 <span>Comment</span>
               </button>
             </div>
+            <!-- who likes post  -->
+            <% if post.likes.any? %>
+              <div class="mt-1 text-sm text-gray-600">
+                <strong>Liked by:</strong>
+                <% post.likes.each do |like| %>
+                  <%= like.user.name %><% unless like == post.likes.last %>, <% end %>
+                <% end %>
+              </div>
+            <% end %>
+
             <!-- New Comment Input -->
             <%= form_with(model: [post, Comment.new],local: true) do |f| %>
               <div class="mt-4  reply-input">
